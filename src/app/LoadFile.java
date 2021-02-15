@@ -17,7 +17,7 @@ public class LoadFile {
 		String info = br.readLine();
 			
 		while(info != null) {
-			String[] Details = info.split("|");
+			String[] Details = info.split("\\|");
 			if(Details.length==4) {
 				Song song = new Song(Details[0], Details[1],
 						Details[2], Details[3]);

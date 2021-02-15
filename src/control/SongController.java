@@ -81,6 +81,7 @@ public class SongController {
 				artistA.clear();
 				albumA.clear();
 				yearA.clear();
+				SongList.sort(sl.songList);
 				f.updateFile(sl.songList);
 				listview.refresh();
 			}
@@ -139,6 +140,7 @@ public class SongController {
 				albumD.setText(album);
 				yearD.setText(year);
 			}
+			SongList.sort(sl.songList);
 			f.updateFile(sl.songList);
 			listview.refresh();
 		}

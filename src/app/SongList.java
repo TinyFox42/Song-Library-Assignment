@@ -51,8 +51,14 @@ public class SongList {
 				}
 				while(c1.charAt(cc) == c2.charAt(cc)) {
 					cc++;
+					if(cc == c1.length() || cc == c2.length()) {
+						break;
+					}
 				}
-				if(c1.charAt(cc) > c2.charAt(cc)) {
+				if(cc == c1.length()) {
+					break;
+					
+				} else if((cc == c2.length()) || c1.charAt(cc) > c2.charAt(cc)) {
 					Song temp = songs.get(i);
 					songs.set(i, songs.get(j));
 					songs.set(j, temp);
