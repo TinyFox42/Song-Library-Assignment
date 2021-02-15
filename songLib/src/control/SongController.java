@@ -68,18 +68,18 @@ public class SongController {
 				sl.add(title,artist,album,year);
 				listview.setItems(sl.getList());
 				listview.getSelectionModel().select(0);
-				listview.refresh();
 				titleA.clear();
 				artistA.clear();
 				albumA.clear();
 				yearA.clear();
 				f.updateFile(sl.songList);
+				listview.refresh();
 			}
 		}
 		if(button == deleteB) {
 			sl.delete(curSong);
-			listview.refresh();
 			f.updateFile(sl.songList);
+			listview.refresh();
 		}
 		if(button == editB) {
 			if(titleA.getText().isEmpty() && artistA.getText().isEmpty()
@@ -120,8 +120,8 @@ public class SongController {
 				albumD.setText(album);
 				yearD.setText(year);
 			}
-			listview.refresh();
 			f.updateFile(sl.songList);
+			listview.refresh();
 		}
 	}
 }

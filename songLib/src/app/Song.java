@@ -43,7 +43,10 @@ public class Song {
 	public String toString() {
 		return title + " - " + artist;
 	}
-	public String toFile() {
+	public String toFile(Song s) {
+		if(s.getAlbum()==null && s.getYear()==null) {
+			return title + ";" + artist + ";;";			
+		}
 		return title + ";" + artist + ";" + album + ";" + year; 
 	}
 }

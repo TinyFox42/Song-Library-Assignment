@@ -38,10 +38,19 @@ public class SongList {
 		if(songs.isEmpty()) {
 			return false;
 		}
-		
 		for(int i=0; i<songs.size(); i++) {
 			for(int j=i+1; j<songs.size(); j++) {
-				if(songs.get(i).getTitle().compareTo(songs.get(j).getTitle()) > 0){
+				int cc=0;
+				String c1 = songs.get(i).getTitle().toLowerCase();
+				String c2 = songs.get(j).getTitle().toLowerCase();
+				if(c1.equals(c2)) {
+					c1 = songs.get(i).getArtist().toLowerCase();
+					c2 = songs.get(j).getArtist().toLowerCase();
+				}
+				while(c1.charAt(cc) == c2.charAt(cc)) {
+					cc++;
+				}
+				if(c1.charAt(cc) > c2.charAt(cc)) {
 					Song temp = songs.get(i);
 					songs.set(i, songs.get(j));
 					songs.set(j, temp);
