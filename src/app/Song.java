@@ -1,3 +1,5 @@
+//Made by Eli Thorpe and Austin Suarez
+
 package app;
 
 public class Song {
@@ -43,7 +45,10 @@ public class Song {
 	public String toString() {
 		return title + " - " + artist;
 	}
-	public String toFile() {
-		return title + ";" + artist + ";" + album + ";" + year; 
+	public String toFile(Song s) {
+		if(s.getAlbum()==null && s.getYear()==null) {
+			return title + "|" + artist + "||";			
+		}
+		return title + "|" + artist + "|" + album + "|" + year; 
 	}
 }

@@ -1,3 +1,5 @@
+//Made by Eli Thorpe and Austin Suarez
+
 package control;
 
 import java.io.IOException;
@@ -56,6 +58,13 @@ public class SongController {
 		Button button = (Button) e.getSource();
 		
 		if(button == addB) {
+			Alert check = new Alert(AlertType.CONFIRMATION, "Are You Sure You Want to Add This Song?");
+			check.setHeaderText("Confirm Option");
+			check.showAndWait();
+			if(check.getResult().getText().equals("Cancel")) {
+				return;
+			}
+			
 			if(!(sl.getList().isEmpty()) && sl.hasSong(titleA.getText(), artistA.getText())) {
 				Alert alert = new Alert(AlertType.INFORMATION,"Song already added.", ButtonType.OK);
 				alert.setHeaderText("Error");
@@ -64,55 +73,66 @@ public class SongController {
 				Alert alert = new Alert(AlertType.INFORMATION, "Title and Artist required.", ButtonType.OK);
 				alert.setHeaderText("Error");
 				alert.showAndWait();
-			}else {
+			} else {
 				sl.add(title,artist,album,year);
 				listview.setItems(sl.getList());
-				listview.getSelectionModel().select(0);
-				listview.refresh();
+				listview.getSelectionModel().selectLast();
 				titleA.clear();
 				artistA.clear();
 				albumA.clear();
 				yearA.clear();
+				SongList.sort(sl.songList);
 				f.updateFile(sl.songList);
+				listview.refresh();
 			}
 		}
 		if(button == deleteB) {
+			Alert check = new Alert(AlertType.CONFIRMATION, "Are You Sure You Want to Delete This Song?");
+			check.setHeaderText("Confirm Option");
+			check.showAndWait();
+			if(check.getResult().getText().equals("Cancel")) {
+				return;
+			}
 			sl.delete(curSong);
-			listview.refresh();
 			f.updateFile(sl.songList);
+			listview.refresh();
 		}
 		if(button == editB) {
+			Alert check = new Alert(AlertType.CONFIRMATION, "Are You Sure You Want to Edit This Song?");
+			check.setHeaderText("Confirm Option");
+			check.showAndWait();
+			if(check.getResult().getText().equals("Cancel")) {
+				return;
+			}
 			if(titleA.getText().isEmpty() && artistA.getText().isEmpty()
 					&& albumA.getText().isEmpty() && yearA.getText().isEmpty()) {
 				Alert alert = new Alert(AlertType.INFORMATION,"At least one field required.", ButtonType.OK);
 				alert.setHeaderText("Error");
 				alert.showAndWait();
-			}
-			if(!(titleA.getText().isEmpty()) && !(artistA.getText().isEmpty())
+			} else if(!(sl.getList().isEmpty()) && sl.hasSong(titleA.getText(), artistA.getText())) {
+				Alert alert = new Alert(AlertType.INFORMATION,"Song already added.", ButtonType.OK);
+				alert.setHeaderText("Error");
+				alert.showAndWait();
+			} else if(!(titleA.getText().isEmpty()) && !(artistA.getText().isEmpty())
 					&& albumA.getText().isEmpty() && yearA.getText().isEmpty()) {
 				sl.edit(curSong, title, artist, album, year);
 				titleD.setText(title);
 				artistD.setText(artist);
 				albumD.setText(album);
 				yearD.setText(year);
-			}
-			if(!(titleA.getText().isEmpty())) {
+			} else if(!(titleA.getText().isEmpty())) {
 				sl.edit(curSong, title, curSong.getArtist(), curSong.getAlbum(), curSong.getYear());
 				titleD.setText(title);
-			}
-			if(!(artistA.getText().isEmpty())) {
+			} else if(!(artistA.getText().isEmpty())) {
 				sl.edit(curSong, curSong.getTitle(), artist, curSong.getAlbum(), curSong.getYear());
 				artistD.setText(artist);
-			}
-			if(!(albumA.getText().isEmpty())) {
+			} else if(!(albumA.getText().isEmpty())) {
 				sl.edit(curSong, curSong.getTitle(), curSong.getArtist(), album, curSong.getYear());
 				albumD.setText(album);
-			}
-			if(!(yearA.getText().isEmpty())) {
+			} else if(!(yearA.getText().isEmpty())) {
 				sl.edit(curSong, curSong.getTitle(), curSong.getArtist(), curSong.getAlbum(), year);
 				yearD.setText(year);
-			}
-			if(!(titleA.getText().isEmpty()) && !(artistA.getText().isEmpty())
+			} else if(!(titleA.getText().isEmpty()) && !(artistA.getText().isEmpty())
 					&& albumA.getText().isEmpty() && yearA.getText().isEmpty()) {
 				sl.edit(curSong, title, artist, album, year);
 				titleD.setText(title);
@@ -120,8 +140,9 @@ public class SongController {
 				albumD.setText(album);
 				yearD.setText(year);
 			}
-			listview.refresh();
+			SongList.sort(sl.songList);
 			f.updateFile(sl.songList);
+			listview.refresh();
 		}
 	}
 }

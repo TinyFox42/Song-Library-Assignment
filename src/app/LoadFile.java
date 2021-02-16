@@ -1,3 +1,5 @@
+//Made by Eli Thorpe and Austin Suarez
+
 package app;
 
 import app.SongList;
@@ -15,11 +17,17 @@ public class LoadFile {
 		String info = br.readLine();
 			
 		while(info != null) {
-			String[] Details = info.split(";");
-			Song song = new Song(Details[0], Details[1],
-					Details[2], Details[3]);
-			songs.add(song);
-			info = br.readLine();
+			String[] Details = info.split("\\|");
+			if(Details.length==4) {
+				Song song = new Song(Details[0], Details[1],
+						Details[2], Details[3]);
+				songs.add(song);
+				info = br.readLine();
+			} else {
+				Song song = new Song(Details[0], Details[1]);
+				songs.add(song);
+				info = br.readLine();
+			}
 		}
 		
 		SongList.sort(songs);
@@ -29,11 +37,15 @@ public class LoadFile {
 	public static void updateFile(ObservableList<Song> songs)
 	throws IOException {
 		FileWriter fw = new FileWriter("songs.csv");
+		int count = 0;
 		for(Song s:songs) {
-			fw.append(s.toFile() + "\n");
+			fw.append(s.toFile(s));
+			count++;
+			if(count < songs.size()) {
+				fw.append("\n");
+			}
 		}
-		fw.flush();
+		
 		fw.close();
-		SongList.sort(songs);
 	}
 }
